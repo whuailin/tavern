@@ -30,6 +30,7 @@ public class MapEditorEngine : MonoBehaviour {
     private GameObject Map;
     private List<GameObject> tcGoes = new List<GameObject>();
     public GameObject grid;
+    private GameObject hitObj;
 
     public GameObject cameraGO;
     public class TileInfo {
@@ -84,6 +85,7 @@ public class MapEditorEngine : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        optState = states.tMove;
         switch (optState)
         {
             case states.none:
@@ -91,6 +93,7 @@ public class MapEditorEngine : MonoBehaviour {
             case states.tChoose:
                 break;
             case states.tMove:
+                procTMove();
                 break;
             case states.tRoate:
                 break;
@@ -107,17 +110,40 @@ public class MapEditorEngine : MonoBehaviour {
         }
 	}
 
-    void foo() {
-        Ray builldRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+    void procTMove() { 
+        hitObj = getHitObj();
+        if (hitObj)
+        {
+            Debug.Log(hitObj.name);
+
+            Vector3 calPos = new Vector3(500.0f, 0.01f, 500.0f);
+
+            curTile.transform.position = calPos;
+        }
+        else
+        {
+            Debug.Log("not hit obj");
+        }
+    }
+
+    private GameObject getHitObj() {
+        Ray buildRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit buildHit;
 
-        if (Physics.Raycast(builldRay, out buildHit, 1000))
+        if (Physics.Raycast(buildRay, out buildHit, 1000))
         {
             if (buildHit.collider)
             {
-                GameObject hitObj = buildHit.collider.gameObject;
-
-            } 
+                return buildHit.collider.gameObject;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else
+        {
+            return null;
         }
     }
 }
