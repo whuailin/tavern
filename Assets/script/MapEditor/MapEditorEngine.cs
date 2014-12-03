@@ -69,6 +69,8 @@ public class MapEditorEngine : MonoBehaviour {
         cameraGO.transform.position = new Vector3(500, 14, 490);
 
         optState = states.none;
+        GameObject gameObj = (GameObject)Resources.Load("grass");
+        curTile = (GameObject)Instantiate(gameObj, new Vector3(0.0f, 0.0f, 0.0f), gameObj.transform.rotation);
     }
 
     private void loadTools() {
@@ -111,12 +113,13 @@ public class MapEditorEngine : MonoBehaviour {
 	}
 
     void procTMove() { 
-        hitObj = getHitObj();
+        RaycastHit buildHit = getHitObj();
+        hitObj = buildHit.collider.gameObject;
         if (hitObj)
         {
             Debug.Log(hitObj.name);
 
-            Vector3 calPos = new Vector3(500.0f, 0.01f, 500.0f);
+            Vector3 calPos = new Vector3(buildHit.point.x, 0.01f, buildHit.point.z);
 
             curTile.transform.position = calPos;
         }
@@ -126,7 +129,8 @@ public class MapEditorEngine : MonoBehaviour {
         }
     }
 
-    private GameObject getHitObj() {
+    private RaycastHit getHitObj()
+    {
         Ray buildRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit buildHit;
 
@@ -134,16 +138,16 @@ public class MapEditorEngine : MonoBehaviour {
         {
             if (buildHit.collider)
             {
-                return buildHit.collider.gameObject;
+                return buildHit;
             }
             else
             {
-                return null;
+                return new RaycastHit();
             }
         }
         else
         {
-            return null;
+            return new RaycastHit();
         }
     }
 }
