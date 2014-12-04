@@ -1,13 +1,15 @@
-#过滤数据库文件、sln解决方案文件、配置文件
-*.mdb
-*.ldb
+# OS X only (not needed on other platforms)
+.DS_Store
+*.swp
+*.Trashes
+
+# All platforms
+Library
+Temp
+*.csproj
+*.pidb
+*.unityproj
 *.sln
-*.config
+*.userprefs
 
-
-#过滤文件夹Debug,Release,obj
-Debug/
-Release/
-obj/
-Temp/
-Library/
+UnityVS.*
