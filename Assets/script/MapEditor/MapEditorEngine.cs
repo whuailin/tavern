@@ -26,8 +26,10 @@ public class MapEditorEngine : MonoBehaviour {
     private int curObjID;
     private int curLayer;
     private states optState;
+	private bool canBuild;
 
     private GameObject Map;
+	private GameObject tilesContaier;
     private List<GameObject> tcGoes = new List<GameObject>();
     public GameObject grid;
     private GameObject hitObj;
@@ -57,10 +59,13 @@ public class MapEditorEngine : MonoBehaviour {
         initMapEditorEngine();
 
         loadTools();
+
+		optState = states.tMove;
     }
 
     public void initMapEditorEngine() {
         Map = new GameObject("MAP");
+		tilesContaier = new GameObject ("TileContainer");
         globalGridSizeZ = 1000;
         globalGridSizeX = 1000;
         gridSize = new Vector3(1000.0f, 0.1f, 1000.0f);
@@ -87,7 +92,7 @@ public class MapEditorEngine : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        optState = states.tMove;
+
         switch (optState)
         {
             case states.none:
@@ -100,7 +105,8 @@ public class MapEditorEngine : MonoBehaviour {
             case states.tRoate:
                 break;
             case states.tBuild:
-                break;
+				procBuild();
+			   break;
             case states.tErase:
                 break;
             case states.camMove:
@@ -114,14 +120,19 @@ public class MapEditorEngine : MonoBehaviour {
 
     void procTMove() { 
         RaycastHit buildHit = getHitObj();
-        hitObj = buildHit.collider.gameObject;
-        if (hitObj)
+		if (buildHit.collider)
         {
-            Debug.Log(hitObj.name);
+
+        	hitObj = buildHit.collider.gameObject;			
+        	Debug.Log(hitObj.name);
 
             Vector3 calPos = new Vector3(buildHit.point.x, 0.01f, buildHit.point.z);
 
             curTile.transform.position = calPos;
+			canBuild = true;
+			if(Input.GetKeyDown(KeyCode.Mouse0) && canBuild){
+				optState = states.tBuild;
+			}
         }
         else
         {
@@ -150,4 +161,17 @@ public class MapEditorEngine : MonoBehaviour {
             return new RaycastHit();
         }
     }
+
+	void procBuild(){
+		GameObject newObj = null;
+		newObj = (GameObject)Instantiate (curTile, curTile.transform.position, curTile.transform.rotation);
+		newObj.layer = 0;
+		Destroy (newObj.rigidbody);
+		newObj.collider.isTrigger = false;
+
+		newObj.transform.parent = tilesContaier.transform;
+
+		canBuild = false;
+		optState = states.tMove;
+	}
 }

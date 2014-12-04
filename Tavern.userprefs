@@ -1,8 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\Unite Seattle 2D Examples\Assets\Scripts\SimpleCCD.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\script\MapEditor\MapEditorEngine.cs">
     <Files>
-      <File FileName="..\Unite Seattle 2D Examples\Assets\Scripts\SimpleCCD.cs" Line="5" Column="23" />
+      <File FileName="Assets\script\BusinessMgr.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\business.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\MapEditor\MapEditorEngine.cs" Line="126" Column="48" />
+      <File FileName="..\Unity_Project\proTileMapEditor\Assets\proTileMapEditor\uteScripts\uteUtils\uteMapEditorEngine.cs" Line="1047" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
