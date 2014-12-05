@@ -31,6 +31,7 @@ public class MapEditorEngine : MonoBehaviour {
     private GameObject Map;
 	private GameObject tilesContaier;
     private List<GameObject> tcGoes = new List<GameObject>();
+	private GameObject lightGO;
     public GameObject grid;
     private GameObject hitObj;
 
@@ -66,6 +67,9 @@ public class MapEditorEngine : MonoBehaviour {
     public void initMapEditorEngine() {
         Map = new GameObject("MAP");
 		tilesContaier = new GameObject ("TileContainer");
+		lightGO = (GameObject) Instantiate((GameObject) Resources.Load("uteForEditor/uteMapLight"));
+		lightGO.name = "MapLight";
+		
         globalGridSizeZ = 1000;
         globalGridSizeX = 1000;
         gridSize = new Vector3(1000.0f, 0.1f, 1000.0f);
@@ -74,12 +78,12 @@ public class MapEditorEngine : MonoBehaviour {
         cameraGO.transform.position = new Vector3(500, 14, 490);
 
         optState = states.none;
-        GameObject gameObj = (GameObject)Resources.Load("grass");
+		GameObject gameObj = (GameObject)Resources.Load("box3");
         curTile = (GameObject)Instantiate(gameObj, new Vector3(0.0f, 0.0f, 0.0f), gameObj.transform.rotation);
     }
 
     private void loadTools() {
-        GameObject _grid = (GameObject)Resources.Load("uteLayer");
+		GameObject _grid = (GameObject)Resources.Load("uteForEditor/uteLayer");
         grid = (GameObject)Instantiate(_grid, new Vector3((gridSize.x / 2) + 0.5f, 0.0f, (gridSize.z / 2) + 0.5f), _grid.transform.rotation);
         grid.name = "Grid";
         setGrid(globalGridSizeX, globalGridSizeZ);
@@ -126,7 +130,7 @@ public class MapEditorEngine : MonoBehaviour {
         	hitObj = buildHit.collider.gameObject;			
         	Debug.Log(hitObj.name);
 
-            Vector3 calPos = new Vector3(buildHit.point.x, 0.01f, buildHit.point.z);
+			Vector3 calPos = new Vector3(Mathf.Round(buildHit.point.x), 0.01f, Mathf.Round(buildHit.point.z));
 
             curTile.transform.position = calPos;
 			canBuild = true;
