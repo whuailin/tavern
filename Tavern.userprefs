@@ -4,8 +4,8 @@
     <Files>
       <File FileName="Assets\script\BusinessMgr.cs" Line="1" Column="1" />
       <File FileName="Assets\script\business.cs" Line="1" Column="1" />
-      <File FileName="Assets\script\MapEditor\MapEditorEngine.cs" Line="126" Column="48" />
-      <File FileName="..\Unity_Project\proTileMapEditor\Assets\proTileMapEditor\uteScripts\uteUtils\uteMapEditorEngine.cs" Line="1047" Column="4" />
+      <File FileName="Assets\script\MapEditor\MapEditorEngine.cs" Line="85" Column="63" />
+      <File FileName="..\Unity_Project\proTileMapEditor\Assets\proTileMapEditor\uteScripts\uteUtils\uteMapEditorEngine.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
