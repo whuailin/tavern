@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MapEditorEngine : MonoBehaviour {
 
@@ -36,6 +38,9 @@ public class MapEditorEngine : MonoBehaviour {
     private GameObject hitObj;
 
     public GameObject cameraGO;
+
+	public GraphicRaycaster UIRaycaster;
+
     public class TileInfo {
         public string catName;
         public string catCollision;
@@ -59,10 +64,38 @@ public class MapEditorEngine : MonoBehaviour {
     {
         initMapEditorEngine();
 
+		loadTiles ();
         loadTools();
 
 		optState = states.tMove;
     }
+
+	void loadTiles(){
+		TextAsset _allTileInfo = (TextAsset)Resources.Load ("uteForEditor/uteCategoryInfo");
+		string allTileInfo = _allTileInfo.text;
+		string[] allInfoByCat = (string[]) allTileInfo.Split ('|');
+
+		for (int i = 0; i < allInfoByCat.Length; i++) {
+			if (!allInfoByCat[i].ToString().Equals("")) {
+				string[] splitedInfo = (string[])allInfoByCat[i].ToString().Split('$');
+				string[] splitedGUIDs = (string[])splitedInfo[2].ToString().Split(':');
+
+				string cName = splitedInfo[0].ToString();
+				string cCollider = splitedInfo[1].ToString();
+				string cType = splitedInfo[3].ToString();
+
+				List<GameObject> cObjs = new List<GameObject>();
+				List<Texture2D> cTexture = new List<Texture2D>();
+				List<string> cObjsNames = new List<string>();
+				List<string> cObjsGuids = new List<string>();
+
+				for (int j = 0; j < splitedGUIDs.Length; j++) {
+					
+				}
+			}
+		}
+	}
+
 
     public void initMapEditorEngine() {
         Map = new GameObject("MAP");
@@ -122,27 +155,32 @@ public class MapEditorEngine : MonoBehaviour {
         }
 	}
 
-    void procTMove() { 
-        RaycastHit buildHit = getHitObj();
-		if (buildHit.collider)
-        {
+    void procTMove ()
+		{
 
-        	hitObj = buildHit.collider.gameObject;			
-        	Debug.Log(hitObj.name);
-
-			Vector3 calPos = new Vector3(Mathf.Round(buildHit.point.x), 0.01f, Mathf.Round(buildHit.point.z));
-
-            curTile.transform.position = calPos;
-			canBuild = true;
-			if(Input.GetKeyDown(KeyCode.Mouse0) && canBuild){
-				optState = states.tBuild;
-			}
-        }
-        else
-        {
-            Debug.Log("not hit obj");
-        }
-    }
+				if (EventSystem.current.IsPointerOverGameObject ()) {
+						Debug.Log ("当前触摸在UI上");
+				} else {
+						RaycastHit buildHit = getHitObj ();
+						if (buildHit.collider) {
+				
+								hitObj = buildHit.collider.gameObject;			
+								Debug.Log (hitObj.name);
+				
+								Vector3 calPos = new Vector3 (Mathf.Round (buildHit.point.x), 0.01f, Mathf.Round (buildHit.point.z));
+				
+								curTile.transform.position = calPos;
+								canBuild = true;
+								if (Input.GetKeyDown (KeyCode.Mouse0) && canBuild) {
+										optState = states.tBuild;
+								}
+						} else {
+								Debug.Log ("not hit obj");
+						}
+						Debug.Log ("当前没有触摸在UI上");
+				}
+        
+		}
 
     private RaycastHit getHitObj()
     {
