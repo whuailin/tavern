@@ -157,7 +157,6 @@ public class MapEditorEngine : MonoBehaviour {
 
     void procTMove ()
 		{
-
 				if (EventSystem.current.IsPointerOverGameObject ()) {
 						Debug.Log ("当前触摸在UI上");
 				} else {
