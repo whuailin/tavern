@@ -33,7 +33,7 @@ public class MapEditorEngine : MonoBehaviour {
     private GameObject Map;
 	private GameObject tilesContaier;
 	private List<TileInfo> allTiles = new List<TileInfo>();
-    private List<GameObject> tcGoes = new List<GameObject>();
+    private List<GameObject> _tcGoes = new List<GameObject>();
 	private GameObject lightGO;
     public GameObject grid;
     private GameObject hitObj;
